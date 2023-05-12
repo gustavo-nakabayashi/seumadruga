@@ -14,3 +14,10 @@ test('Should create a new user', async () => {
   expect(response.status).toBe(201);
   expect(response.body).toHaveProperty('name', 'Gustavo Barros');
 });
+
+test('Should not create a user without name', async () => {
+  const data = { email: 'gustavo@email.com', password: '123456' };
+  const response = await request(app).post('/users').send(data);
+  expect(response.status).toBe(400);
+  expect(response.body.error).toBe('Name is a required attribute');
+});

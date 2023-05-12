@@ -6,6 +6,7 @@ module.exports = (app) => {
 
   const create = async (req, res) => {
     const response = await app.services.user.create(req.body);
+    if (response.error) res.status(400).json(response);
     res.status(201).json(response[0]);
   };
 
