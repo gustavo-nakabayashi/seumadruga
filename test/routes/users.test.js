@@ -1,5 +1,5 @@
 const request = require('supertest');
-const app = require('../src/app');
+const app = require('../../src/app');
 
 test('Should return user list', async () => {
   const response = await request(app).get('/users');
