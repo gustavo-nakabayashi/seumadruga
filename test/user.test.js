@@ -9,7 +9,8 @@ test('Should return user list', async () => {
 });
 
 test('Should create a new user', async () => {
-  const data = { name: 'Gustavo Barros', email: 'gustavo@email.com' };
+  const email = `${Date.now()}@mail.com`;
+  const data = { name: 'Gustavo Barros', email, password: '123456' };
   const response = await request(app).post('/users').send(data);
   expect(response.status).toBe(201);
   expect(response.body).toHaveProperty('name', 'Gustavo Barros');
