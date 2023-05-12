@@ -1,6 +1,8 @@
 const request = require('supertest');
 const app = require('../../src/app');
 
+const email = `${Date.now()}@mail.com`;
+
 test('Should return user list', async () => {
   const response = await request(app).get('/users');
   expect(response.status).toBe(200);
@@ -8,7 +10,6 @@ test('Should return user list', async () => {
 });
 
 test('Should create a new user', async () => {
-  const email = `${Date.now()}@mail.com`;
   const data = { name: 'Gustavo Barros', email, password: '123456' };
   const response = await request(app).post('/users').send(data);
   expect(response.status).toBe(201);
@@ -34,4 +35,12 @@ test('Should not create an user without password', async () => {
   const response = await request(app).post('/users').send(data);
   expect(response.status).toBe(400);
   expect(response.body.error).toBe('Password is a required attribute');
+});
+
+
+test('Should not create a user with duplicated email', async () => {
+  const data = { name: 'Gustavo Barros', email, password: '123456' };
+  const response = await request(app).post('/users').send(data);
+  expect(response.status).toBe(400);
+  expect(response.body.error).toBe('User with this email already exists');
 });
