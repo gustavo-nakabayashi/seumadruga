@@ -1,6 +1,6 @@
 module.exports = (app) => {
-  const findAll = (req, res) => {
-    const users = [{ name: 'Gustavo Barros', email: 'gustavo@email.com' }];
+  const findAll = async (req, res) => {
+    const users = await app.db('users').select('*');
     res.status(200).json(users);
   };
 
