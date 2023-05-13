@@ -1,4 +1,3 @@
-
 const request = require('supertest');
 const app = require('../../src/app');
 
@@ -16,6 +15,19 @@ test('Should return accounts list', async () => {
   const response = await request(app).get('/accounts');
   expect(response.status).toBe(200);
   expect(response.body.length).toBeGreaterThan(0);
+});
+
+test('Should return accounts by id', async () => {
+  // Arrange
+  const accountToAdd = { user_id: userId, name: 'Acc by ID' };
+  const { body: { id: addedAccountId } } = await request(app).post('/accounts').send(accountToAdd);
+
+  // Act
+  const response = await request(app).get(`/accounts/${addedAccountId}`);
+
+  // Assert
+  expect(response.status).toBe(200);
+  expect(response.body).toMatchObject([{ user_id: userId, name: 'Acc by ID', id: addedAccountId }]);
 });
 
 test('Should create an account successfully', () => {

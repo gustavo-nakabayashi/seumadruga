@@ -4,11 +4,17 @@ module.exports = (app) => {
     res.status(200).json(accounts);
   };
 
+  const findById = async (req, res) => {
+    const accounts = await app.services.account.findAll({ id: req.params.id });
+    res.status(200).json(accounts);
+  };
+
   const create = async (req, res) => {
     const response = await app.services.account.create(req.body);
     if (response.error) res.status(400).json(response);
     res.status(201).json(response[0]);
   };
 
-  return { findAll, create };
+
+  return { findAll, findById, create };
 };
