@@ -6,6 +6,7 @@ module.exports = (app) => {
 
   const findById = async (req, res) => {
     const accounts = await app.services.account.findAll({ id: req.params.id });
+    if (accounts.error) res.status(404).json(accounts);
     res.status(200).json(accounts[0]);
   };
 

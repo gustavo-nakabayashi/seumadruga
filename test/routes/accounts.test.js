@@ -30,6 +30,17 @@ test('Should return accounts by id', async () => {
   expect(response.body).toMatchObject({ user_id: userId, name: 'Acc by ID', id: addedAccountId });
 });
 
+test('Should return 404 if account with id does not exists', async () => {
+  // Arrange
+  const nonExistingAccountId = 999999999;
+  // Act
+  const response = await request(app).get(`/accounts/${nonExistingAccountId}`);
+
+  // Assert
+  expect(response.status).toBe(404);
+  expect(response.body).toMatchObject({ error: 'Account not found' });
+});
+
 test('Should create an account successfully', () => {
   const data = { user_id: userId, name: 'Inter' };
   return request(app).post('/accounts').send(data).then((response) => {
