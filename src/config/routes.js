@@ -12,5 +12,6 @@ module.exports = (app) => {
   app
     .route('/accounts/:id')
     .get(app.routes.accounts.findById)
-    .put(app.routes.accounts.updateById);
+    .put(app.routes.accounts.updateById)
+    .delete(app.routes.accounts.deleteById);
 };

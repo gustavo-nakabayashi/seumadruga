@@ -63,3 +63,17 @@ test('Should update an account successfully', async () => {
   expect(putResponse.status).toBe(200);
   expect(getResponse.body).toHaveProperty('name', 'Acc after update');
 });
+
+test('Should delete an account successfully', async () => {
+  // Arrange
+  const accountToAdd = { user_id: userId, name: 'Acc to delete' };
+  const { body: { id: addedAccountId } } = await request(app).post('/accounts').send(accountToAdd);
+
+  // Act
+  const deleteResponse = await request(app).delete(`/accounts/${addedAccountId}`);
+
+  // Assert
+  const getResponse = await request(app).get(`/accounts/${addedAccountId}`);
+  expect(deleteResponse.status).toBe(204);
+  expect(getResponse.status).toBe(404);
+});

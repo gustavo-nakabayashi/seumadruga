@@ -16,6 +16,11 @@ module.exports = (app) => {
     res.status(200).json(updatedAccount);
   };
 
+  const deleteById = async (req, res) => {
+    const { id } = req.params;
+    await app.services.account.destroy(id);
+    res.status(204).json();
+  };
 
   const create = async (req, res) => {
     const response = await app.services.account.create(req.body);
@@ -23,8 +28,7 @@ module.exports = (app) => {
     res.status(201).json(response[0]);
   };
 
-
   return {
-    findAll, findById, create, updateById,
+    findAll, findById, create, updateById, deleteById,
   };
 };

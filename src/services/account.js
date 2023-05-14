@@ -6,7 +6,10 @@ module.exports = (app) => {
   };
 
   const update = (id, account) => app.db('accounts').where({ id }).update(account, '*');
+  const destroy = id => app.db('accounts').where({ id }).delete();
   const create = async account => app.db('accounts').insert(account, '*');
 
-  return { findAll, create, update };
+  return {
+    findAll, create, update, destroy,
+  };
 };
