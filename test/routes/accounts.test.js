@@ -27,7 +27,7 @@ test('Should return accounts by id', async () => {
 
   // Assert
   expect(response.status).toBe(200);
-  expect(response.body).toMatchObject([{ user_id: userId, name: 'Acc by ID', id: addedAccountId }]);
+  expect(response.body).toMatchObject({ user_id: userId, name: 'Acc by ID', id: addedAccountId });
 });
 
 test('Should create an account successfully', () => {
