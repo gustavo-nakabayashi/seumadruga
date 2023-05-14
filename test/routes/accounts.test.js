@@ -38,3 +38,17 @@ test('Should create an account successfully', () => {
     expect(response.body).toHaveProperty('name', 'Inter');
   });
 });
+
+test('Should update an account successfully', async () => {
+  // Arrange
+  const accountToAdd = { user_id: userId, name: 'Acc to update' };
+  const { body: { id: addedAccountId } } = await request(app).post('/accounts').send(accountToAdd);
+
+  // Act
+  const putResponse = await request(app).put(`/accounts/${addedAccountId}`).send({ name: 'Acc after update' });
+
+  // Assert
+  const getResponse = await request(app).get(`/accounts/${addedAccountId}`);
+  expect(putResponse.status).toBe(200);
+  expect(getResponse.body).toHaveProperty('name', 'Acc after update');
+});
