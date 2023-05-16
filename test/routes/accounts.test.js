@@ -53,6 +53,17 @@ describe('POST /accounts', () => {
       expect(response.body).toHaveProperty('name', 'Inter');
     });
   });
+
+  test('Should not add an account with no name', () => {
+    // Arrange
+    const data = { user_id: userId };
+    // Act
+    return request(app).post('/accounts').send(data).then((response) => {
+      // Assert
+      expect(response.status).toBe(400);
+      expect(response.body).toMatchObject({ error: 'Name is a required attribute' });
+    });
+  });
 });
 
 describe('PUT /accounts/:id', () => {
@@ -73,7 +84,7 @@ describe('PUT /accounts/:id', () => {
 
 describe('DELETE /accounts/:id', () => {
   test('Should delete an account successfully', async () => {
-  // Arrange
+    // Arrange
     const accountToAdd = { user_id: userId, name: 'Acc to delete' };
     const { body: { id: addedAccountId } } = await request(app).post('/accounts').send(accountToAdd);
 

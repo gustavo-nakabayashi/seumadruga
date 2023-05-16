@@ -37,7 +37,6 @@ test('Should not create an user without password', async () => {
   expect(response.body.error).toBe('Password is a required attribute');
 });
 
-
 test('Should not create a user with duplicated email', async () => {
   const data = { name: 'Gustavo Barros', email, password: '123456' };
   const response = await request(app).post('/users').send(data);

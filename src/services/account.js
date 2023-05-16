@@ -7,7 +7,10 @@ module.exports = (app) => {
 
   const update = (id, account) => app.db('accounts').where({ id }).update(account, '*');
   const destroy = id => app.db('accounts').where({ id }).delete();
-  const create = async account => app.db('accounts').insert(account, '*');
+  const create = (account) => {
+    if (!account.name) return { error: 'Name is a required attribute' };
+    return app.db('accounts').insert(account, '*');
+  };
 
   return {
     findAll, create, update, destroy,
