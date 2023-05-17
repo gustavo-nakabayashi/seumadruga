@@ -18,4 +18,10 @@ app.get('/', (req, res) => {
   res.status(200).send();
 });
 
+app.use((err, req, res, next) => {
+  const { message, status } = err;
+  res.status(status || 500).json({ error: message });
+  next(err);
+});
+
 module.exports = app;
